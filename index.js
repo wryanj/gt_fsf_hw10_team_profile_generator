@@ -10,6 +10,7 @@
     // Include related module exports needed for this application
     const Employee = require("./classes_js/employee_class");
     const Manager = require("./classes_js/manager_class");
+    const Engineer = require("./classes_js/engineer_class");
 
     // Define a global array of employees to pull from when generating the HTML content (array is added to as new classes are created)
     let nextStep;
@@ -76,7 +77,7 @@
             },
             {
                 type: "input",
-                name: "gitHubUserName",
+                name: "github",
                 message: "Please enter the engineers Github user name"
             },
             {
@@ -139,21 +140,21 @@
         promptForManagerInfo()
 
             // Then, when manager information is completed, take the managerResponse..
-            .then(managerResponse => {
-            console.log(managerResponse);
+            .then(response => {
+            console.log(response);
 
                 // Create a new employee instance..
-                const employee = new Employee (managerResponse.name, managerResponse.employeeID, managerResponse.email);
+                const employee = new Employee (response.name, response.employeeID, response.email);
                 console.log (`Created employee information is ${JSON.stringify(employee)}`);
                 console.log (`employee created`)
 
                 // Create a new manager instance... (Ask question on this, feels redundant. Do I have to creat new employee and manager separate?)
-                const manager = new Manager (managerResponse.name, managerResponse.employeeID, managerResponse.email, managerResponse.officeNumber);
+                const manager = new Manager (response.name, response.employeeID, response.email, response.officeNumber);
                 console.log (`Created manager information is ${JSON.stringify(manager)}`);
                 console.log (`manager created`)
 
                 // Set the value of the nextStep global variable to the selected next steps
-                nextStep = managerResponse.nextStep;
+                nextStep = response.nextStep;
                 console.log(`Next step within .then(managerresponse) set to ${nextStep}`);
             })
    
@@ -175,30 +176,58 @@
                 }
             })
 
-            // Then if its a success log success
-            .then(() => console.log("success"))
-
             // If there is an failure, console log an error and stop the sequence
             .catch(err => console.error(err));     
     }
 
-        // If the user selects to add an engineer, create a new engineer
-        const createEngineer = () => {
-        console.log(`createEngineer function invoked`);
 
-            // If invoked, prompt user for engineer information (and next steps selection)
+    // (IF SELECTED AS NEXT STEP) If the user selects to add an engineer, create a new engineer
+    const createEngineer = () => {
+     console.log(`createEngineer function invoked`);
 
-                // Then, when engineer information is completed, take the engineerResponse...
+         // If function is invoked, promt the user to answer questions about their engineer...
+         promptForEngineerInfo()
 
-                    // And create a (parent) instance of Employee class with name, id, email
+            // Then, when manager information is completed, take the EngineerResponse and..
+            .then(response => {
+            console.log(response);
 
-                    // Then (which is needed to ensure an instance of this employee is availible to extend as an instance of engineer...) 
+                // Create a new employee instance..
+                const employee = new Employee (response.name, response.employeeID, response.email);
+                console.log (`Created employee information is ${JSON.stringify(employee)}`);
+                console.log (`employee created`)
 
-                        // Create an instance of Engineer class with Github profile...
-                
-                            // Then, If they want to create another employee, invoke the appropraite function ELSE begin the team profile generation process..
+                // Create a new Engineer instance... 
+                const engineer = new Engineer (response.name, response.employeeID, response.email, response.github);
+                console.log (`Created Engineer information is ${JSON.stringify(engineer)}`);
+                console.log (`Engineer created`)
 
-                            // If an error is detected, catch it, console log an error and stop the function
+                // Set the value of the nextStep global variable to the selected next steps
+                nextStep = response.nextStep;
+                console.log(`Next step within set to ${nextStep}`);
+            })
+
+         // Then (if the above is successful) If they want to create another employee, invoke the appropraite function ELSE begin the team profile generation process..
+            .then(() => {
+            console.log(`Next step on new .then is  ${nextStep} (should be same as above)`);
+
+                // If they want to add an engineer, call the createEngineer function
+                if (nextStep === "Add an Engineer") {
+                    createEngineer();
+                }
+                // If they want to add an intern, call the createIntern function
+                else if (nextStep === "Add an Intern") {
+                    createIntern();
+                }
+                // Else (if they decide to finish building the team, the third option) call the createTeamProfile function...
+                else {
+                    createTeamProfile();
+                }
+            })
+
+         // If there is an failure, console log an error and stop the sequence
+         .catch(err => console.error(err));     
+
         }
 
         // If the user selects to add an intern, create a new intern
@@ -218,7 +247,7 @@
                             // Then, If they want to create another employee, invoke the appropraite function ELSE begin the team profile generation process..
 
                             // If an error is detected, catch it, console log an error and stop the function
-        }
+    }
 
     // If the user selects to finish building the team profile....
     const createTeamProfile = () => {

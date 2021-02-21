@@ -22,7 +22,7 @@
         // Define Class Methods
 
             // Returns the office number for a given Manager class
-            getOfficeNumber (officeNumber) {
+            getOfficeNumber () {
                 return this.officeNumber;
             }
 
