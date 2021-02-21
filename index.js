@@ -84,7 +84,7 @@
                 type: "list",
                 name: "nextStep",
                 message: "You've completed entry of the engineers information. Please select what you like to do next.",
-                choices: ["Add another Engineer", "Add an Intern", "Finish Building Team"]
+                choices: ["Add an Engineer", "Add an Intern", "Finish Building Team"]
             }
         ])
     }
@@ -117,7 +117,7 @@
                 type: "list",
                 name: "nextStep",
                 message: "You've completed entry of the engineers information. Please select what you like to do next.",
-                choices: ["Add another Engineer", "Add an Intern", "Finish Building Team"]
+                choices: ["Add an Engineer", "Add an Intern", "Finish Building Team"]
             }
         ])
     }
