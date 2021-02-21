@@ -7,7 +7,12 @@
     const fs = require("fs");
     const util = require("util");
 
+    // Include related module exports needed for this application
+    const Employee = require("./classes_js/employee_class");
+    const Manager = require("./classes_js/manager_class");
+
     // Define a global array of employees to pull from when generating the HTML content (array is added to as new classes are created)
+    let nextStep;
     let fullTeam = [];
 
     // Use promisify to convert fs.writeFile method so that it returns a promis object
@@ -43,7 +48,7 @@
             },
             {
                 type: "list",
-                name: "nextOptions",
+                name: "nextStep",
                 message: "You've completed entry of the manager's information. Please select what you like to do next.",
                 choices: ["Add an Engineer", "Add an Intern", "Finish Building Team"]
             }
@@ -76,7 +81,7 @@
             },
             {
                 type: "list",
-                name: "nextOptions",
+                name: "nextStep",
                 message: "You've completed entry of the engineers information. Please select what you like to do next.",
                 choices: ["Add another Engineer", "Add an Intern", "Finish Building Team"]
             }
@@ -109,7 +114,7 @@
             },
             {
                 type: "list",
-                name: "nextOptions",
+                name: "nextStep",
                 message: "You've completed entry of the engineers information. Please select what you like to do next.",
                 choices: ["Add another Engineer", "Add an Intern", "Finish Building Team"]
             }
@@ -135,24 +140,51 @@
 
             // Then, when manager information is completed, take the managerResponse..
             .then(managerResponse => {
-                console.log(managerResponse);})
+            console.log(managerResponse);
 
-                // And create a (parent) instance of Employee class with name, id, email..
-                
+                // Create a new employee instance..
+                const employee = new Employee (managerResponse.name, managerResponse.employeeID, managerResponse.email);
+                console.log (`Created employee information is ${JSON.stringify(employee)}`);
+                console.log (`employee created`)
 
-                // Then (which is needed to ensure an instance of this employee is availible to extend as an instance of manager...) 
+                // Create a new manager instance... (Ask question on this, feels redundant. Do I have to creat new employee and manager separate?)
+                const manager = new Manager (managerResponse.name, managerResponse.employeeID, managerResponse.email, managerResponse.officeNumber);
+                console.log (`Created manager information is ${JSON.stringify(manager)}`);
+                console.log (`manager created`)
 
-                    // Create an instance of Manager class with officeNumber...
-            
-                        // Then, If they want to create another employee, invoke the appropraite function ELSE begin the team profile generation process..
-                        .then(() => console.log("success"))
-                        // If there is an failure, console log an error and stop the sequence
-                        .catch(err => console.error(err));
-                
+                // Set the value of the nextStep global variable to the selected next steps
+                nextStep = managerResponse.nextStep;
+                console.log(`Next step within .then(managerresponse) set to ${nextStep}`);
+            })
+   
+            // Then (if the above is successful) If they want to create another employee, invoke the appropraite function ELSE begin the team profile generation process..
+            .then(() => {
+            console.log(`Next step within .then that invokes which function to run next is set to ${nextStep}`);
+
+                // If they want to add an engineer, call the createEngineer function
+                if (nextStep === "Add an Engineer") {
+                    createEngineer();
+                }
+                // If they want to add an intern, call the createIntern function
+                else if (nextStep === "Add an Intern") {
+                    createIntern();
+                }
+                // Else (if they decide to finish building the team, the third option) call the createTeamProfile function...
+                else {
+                    createTeamProfile();
+                }
+            })
+
+            // Then if its a success log success
+            .then(() => console.log("success"))
+
+            // If there is an failure, console log an error and stop the sequence
+            .catch(err => console.error(err));     
     }
 
         // If the user selects to add an engineer, create a new engineer
         const createEngineer = () => {
+        console.log(`createEngineer function invoked`);
 
             // If invoked, prompt user for engineer information (and next steps selection)
 
@@ -171,6 +203,7 @@
 
         // If the user selects to add an intern, create a new intern
         const createIntern = () => {
+        console.log(`createIntern function invoked`);
 
             // If invoked, prompt user for intern information (and next steps selection)
 
@@ -189,6 +222,7 @@
 
     // If the user selects to finish building the team profile....
     const createTeamProfile = () => {
+    console.log(`createTeamProfile function invoked`);
 
         // Define the base HTML to be created for the page (container for employee cards)
 
