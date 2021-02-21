@@ -131,19 +131,24 @@
     const createManager = () => {
 
         // Upon start of application (createManager invoked) prompt user for manager information (and next steps selection)
-        promptForManagerInfo();
+        promptForManagerInfo()
 
             // Then, when manager information is completed, take the managerResponse..
+            .then(managerResponse => {
+                console.log(managerResponse);})
 
                 // And create a (parent) instance of Employee class with name, id, email..
+                
 
                 // Then (which is needed to ensure an instance of this employee is availible to extend as an instance of manager...) 
 
                     // Create an instance of Manager class with officeNumber...
             
                         // Then, If they want to create another employee, invoke the appropraite function ELSE begin the team profile generation process..
-
+                        .then(() => console.log("success"))
                         // If there is an failure, console log an error and stop the sequence
+                        .catch(err => console.error(err));
+                
     }
 
         // If the user selects to add an engineer, create a new engineer
