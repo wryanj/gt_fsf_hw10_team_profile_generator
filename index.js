@@ -17,6 +17,7 @@
     let nextStep;
     let masterEmployeeList = [];
     let fullTeam = [];
+    let employeeCardsArray = [];
     let baseHTML;
 
     // Use promisify to convert fs.writeFile method so that it returns a promis object
@@ -126,13 +127,6 @@
     }
 
 
-    // When invoked, create team profile cards to put into the HTML file that will be written in the createTeamProfile Function
-
-        // For each instance of an employee (manager, intern, and engineer instances) create an HTML profile card
-        //const generateHTMLpage = () => {
-
-       // }
-
 //-------------------------------------------------------------------------------------------------------------------
 // DEFINE SEQUENCE FOR ASYCHRONOUS LOGIC EXECUTION
 //-------------------------------------------------------------------------------------------------------------------
@@ -141,6 +135,7 @@
     const createManager = () => {
     masterEmployeeList = [];
     fullTeam = [];
+    employeeCardsArray = [];
 
         // Upon start of application (createManager invoked) prompt user for manager information (and next steps selection)
         promptForManagerInfo()
@@ -287,7 +282,7 @@
     // If the user selects to finish building the team profile....
     const createTeamProfile = () => {
 
-         // First, write the base HTML file and create it in the directory
+// First, write the base HTML file and create it in the directory
 baseHTML =`
 <!DOCTYPE html>
 <html lang="en">
@@ -345,37 +340,44 @@ baseHTML =`
             // For each item in the full team array...
             for ( i = 0; i<fullTeam.length; i++) {
 
-                // Depending on the members role, write one of three html content for them
+                // Depending on the members role, write one of three html content for them...
 
                     // If they are a manager...
                     if (fullTeam[i].getRole() === "Manager") {
 
-                        // Create a manager card with their information...
-                        const managerCard = `
-                        <div class="col">
-                            <div class="card shadow rounded mx-3">
-                                <div class="card-body text-center text-light bg-success">
-                                    <h5 class="card-title fs-3">${fullTeam[i].name}</h5>
-                                    <h6>Manager</h6>
-                                    <span class="fs-2"><i class="fab fa-black-tie"></i></span>
+                        // Create an object with for a manager card with their information...
+                        const managerCard = {
+                        cardName: fullTeam[i].name,
+                        cardContent: `
+                            <div class="col">
+                                <div class="card shadow rounded mx-3">
+                                    <div class="card-body text-center text-light bg-success">
+                                        <h5 class="card-title fs-3">${fullTeam[i].name}</h5>
+                                        <h6>Manager</h6>
+                                        <span class="fs-2"><i class="fab fa-black-tie"></i></span>
+                                    </div>
+                                    <ul class="list-group list-group-flush">
+                                        <li class="list-group-item"><span class="fw-bold">ID : </span>${fullTeam[i].employeeID}<span>Enter ID</span></li>
+                                        <li class="list-group-item"><span class="fw-bold">Email : </span>${fullTeam[i].email}<span>Enter Email</span></li>
+                                        <li class="list-group-item"><span class="fw-bold">Office # : </span><span>${fullTeam[i].officeNumber}</span></li>
+                                    </ul>
                                 </div>
-                                <ul class="list-group list-group-flush">
-                                    <li class="list-group-item"><span class="fw-bold">ID : </span>${fullTeam[i].employeeID}<span>Enter ID</span></li>
-                                    <li class="list-group-item"><span class="fw-bold">Email : </span>${fullTeam[i].email}<span>Enter Email</span></li>
-                                    <li class="list-group-item"><span class="fw-bold">Office # : </span><span>${fullTeam[i].officeNumber}</span></li>
-                                </ul>
                             </div>
-                        </div>
-                        `;
-
+                            `
+                        }
                         console.log ("Created div for manager is = " + managerCard);
+
+                        // Push that object card into the array
+                        employeeCardsArray.push(managerCard);
                     }
 
                     // If they are an engineer...
                     else if (fullTeam[i].getRole() === "Engineer") {
                          
                         // Create a manager card with their information...
-                        const engineerCard = `
+                        const engineerCard = {
+                        cardName: fullTeam[i].name,
+                        cardContent: `
                         <div class="col">
                             <div class="card shadow rounded mx-3">
                                 <div class="card-body text-center text-light bg-success">
@@ -390,16 +392,21 @@ baseHTML =`
                                 </ul>
                             </div>
                         </div>
-                        `;
-
+                        `
+                        }
                         console.log ("Created div for engineer is = " + engineerCard);
+
+                        // Push that object card into the array
+                        employeeCardsArray.push(engineerCard);
                     }
 
                     // If they are an Intern...
                     else if (fullTeam[i].getRole() === "Intern") {
                          
                         // Create an Intern card with their information...
-                        const internCard = `
+                        const internCard = { 
+                        cardName: fullTeam[i],
+                        cardContent:`
                         <div class="col">
                             <div class="card shadow rounded mx-3">
                                 <div class="card-body text-center text-light bg-success">
@@ -414,9 +421,12 @@ baseHTML =`
                                 </ul>
                             </div>
                         </div>
-                        `;
-
+                        `
+                         }
                         console.log ("Created div for intern is = " + internCard);
+
+                        // Push that object card into the array
+                        employeeCardsArray.push(internCard);
 
                     }
 
