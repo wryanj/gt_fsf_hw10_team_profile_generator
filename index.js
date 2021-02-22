@@ -15,6 +15,7 @@
 
     // Define a global array of employees to pull from when generating the HTML content (array is added to as new classes are created)
     let nextStep;
+    let employeeInstance;
     let fullTeam = [];
 
     // Use promisify to convert fs.writeFile method so that it returns a promis object
@@ -123,6 +124,7 @@
         ])
     }
 
+
     // When invoked, create team profile cards to put into the HTML file that will be written in the createTeamProfile Function
 
         // For each instance of an employee (manager, intern, and engineer instances) create an HTML profile card
@@ -150,14 +152,17 @@
                 console.log (`employee created`)
 
                 // Create a new manager instance... (Ask question on this, feels redundant. Do I have to creat new employee and manager separate?)
-                const manager = new Manager (response.name, response.employeeID, response.email, response.officeNumber);
-                console.log (`Created manager information is ${JSON.stringify(manager)}`);
-                console.log (`manager created`)
+                manager = new Manager (response.name, response.employeeID, response.email, response.officeNumber);
+
+                // Push this instance to the new team array..
+                fullTeam.push(manager)
+                console.log("full team array is set to " + JSON.stringify(fullTeam));
 
                 // Set the value of the nextStep global variable to the selected next steps
                 nextStep = response.nextStep;
                 console.log(`Next step within .then(managerresponse) set to ${nextStep}`);
             })
+
    
             // Then (if the above is successful) If they want to create another employee, invoke the appropraite function ELSE begin the team profile generation process..
             .then(() => {
@@ -201,7 +206,11 @@
                 // Create a new Engineer instance... 
                 const engineer = new Engineer (response.name, response.employeeID, response.email, response.github);
                 console.log (`Created Engineer information is ${JSON.stringify(engineer)}`);
-                console.log (`Engineer created`)
+                console.log (`Engineer created`);
+
+                // Push this instance to the full team array
+                fullTeam.push(engineer);
+                console.log("full team array is set to " + JSON.stringify(fullTeam));
 
                 // Set the value of the nextStep global variable to the selected next steps
                 nextStep = response.nextStep;
@@ -251,7 +260,11 @@
                 const intern = new Intern (response.name, response.employeeID, response.email, response.school);
                 console.log (`Created Intern information is ${JSON.stringify(intern)}`);
                 console.log (`Intern created`)
-   
+
+                // Push this instance to the full team array
+                fullTeam.push(intern);
+                console.log("full team array is set to " + JSON.stringify(fullTeam));
+ 
                 // Set the value of the nextStep global variable to the selected next steps
                 nextStep = response.nextStep;
                 console.log(`Next step within set to ${nextStep}`);
@@ -283,6 +296,10 @@
     // If the user selects to finish building the team profile....
         const createTeamProfile = () => {
          console.log(`createTeamProfile function invoked`);
+         console.log(`full team array is set to = ` + JSON.stringify(fullTeam));
+         console.log ('full team array item one is set to = ' + JSON.stringify(fullTeam[0]));
+         console.log (`property of full team array item 1 for name = ` + JSON.stringify(fullTeam[0].name));
+
 
          // Define the base HTML to be created for the page (container for employee cards)
 
