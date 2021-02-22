@@ -38,3 +38,4 @@
 
     // Export the Employee Class
     module.exports = Intern;
+

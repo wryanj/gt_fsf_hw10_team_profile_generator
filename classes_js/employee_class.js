@@ -15,17 +15,17 @@
         // Define Class Methods
 
             // Method to return employee name
-            getName (name) {
+            getName () {
                 return this.name
             }
 
             // Method to return employee ID
-            getID (employeeID) {
+            getID () {
                 return this.employeeID
             }
 
             // Method to return employee email
-            getID (email) {
+            getID () {
                 return this.email 
             }
 

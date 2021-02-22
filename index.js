@@ -15,8 +15,9 @@
 
     // Define a global array of employees to pull from when generating the HTML content (array is added to as new classes are created)
     let nextStep;
-    let employeeInstance;
+    let masterEmployeeList = [];
     let fullTeam = [];
+    let baseHTML;
 
     // Use promisify to convert fs.writeFile method so that it returns a promis object
     const writeFileAsync = util.promisify(fs.writeFile);
@@ -136,37 +137,37 @@
 // DEFINE SEQUENCE FOR ASYCHRONOUS LOGIC EXECUTION
 //-------------------------------------------------------------------------------------------------------------------
 
-    // (PROGRAM START) Start the program by creating a new manager
+    // (PROGRAM START) Start the program by creating a new manager (and by making sure the arrays for created employees is at 0)
     const createManager = () => {
+    masterEmployeeList = [];
+    fullTeam = [];
 
         // Upon start of application (createManager invoked) prompt user for manager information (and next steps selection)
         promptForManagerInfo()
 
             // Then, when manager information is completed, take the managerResponse..
             .then(response => {
-            console.log(response);
 
                 // Create a new employee instance..
                 const employee = new Employee (response.name, response.employeeID, response.email);
-                console.log (`Created employee information is ${JSON.stringify(employee)}`);
-                console.log (`employee created`)
+
+                // Push this instance of employees to a global array as an object to be stored...
+                masterEmployeeList.push(employee);
 
                 // Create a new manager instance... (Ask question on this, feels redundant. Do I have to creat new employee and manager separate?)
                 manager = new Manager (response.name, response.employeeID, response.email, response.officeNumber);
 
-                // Push this instance to the new team array..
+                // Push this instance to the new team array as an instance of the object to be stored...
                 fullTeam.push(manager)
-                console.log("full team array is set to " + JSON.stringify(fullTeam));
 
                 // Set the value of the nextStep global variable to the selected next steps
                 nextStep = response.nextStep;
-                console.log(`Next step within .then(managerresponse) set to ${nextStep}`);
+
             })
 
    
             // Then (if the above is successful) If they want to create another employee, invoke the appropraite function ELSE begin the team profile generation process..
             .then(() => {
-            console.log(`Next step within .then that invokes which function to run next is set to ${nextStep}`);
 
                 // If they want to add an engineer, call the createEngineer function
                 if (nextStep === "Add an Engineer") {
@@ -186,10 +187,8 @@
             .catch(err => console.error(err));     
     }
 
-
     // (IF SELECTED AS NEXT STEP) If the user selects to add an engineer, create a new engineer
     const createEngineer = () => {
-     console.log(`createEngineer function invoked`);
 
         // If function is invoked, promt the user to answer questions about their engineer...
         promptForEngineerInfo()
@@ -200,26 +199,23 @@
 
                 // Create a new employee instance..
                 const employee = new Employee (response.name, response.employeeID, response.email);
-                console.log (`Created employee information is ${JSON.stringify(employee)}`);
-                console.log (`employee created`)
+                
+                // Push this instance of employee to the global array to be stored...
+                masterEmployeeList.push(employee);
 
                 // Create a new Engineer instance... 
                 const engineer = new Engineer (response.name, response.employeeID, response.email, response.github);
-                console.log (`Created Engineer information is ${JSON.stringify(engineer)}`);
-                console.log (`Engineer created`);
 
-                // Push this instance to the full team array
+                // Push this instance of engineer to the full team array to be stored...
                 fullTeam.push(engineer);
-                console.log("full team array is set to " + JSON.stringify(fullTeam));
-
+              
                 // Set the value of the nextStep global variable to the selected next steps
                 nextStep = response.nextStep;
-                console.log(`Next step within set to ${nextStep}`);
+
             })
 
             // Then (if the above is successful) If they want to create another employee, invoke the appropraite function ELSE begin the team profile generation process..
             .then(() => {
-            console.log(`Next step on new .then is  ${nextStep} (should be same as above)`);
 
                 // If they want to add an engineer, call the createEngineer function
                 if (nextStep === "Add an Engineer") {
@@ -242,37 +238,32 @@
 
     // (IF SELECTED AS NEXT STEP) If the user selects to add an intern, create a new intern
     const createIntern = () => {
-     console.log(`createIntern function invoked`);
 
         // If function is invoked, promt the user to answer questions about their engineer...
         promptForInternInfo()
    
             // Then, when manager information is completed, take the EngineerResponse and..
             .then(response => {
-             console.log(response);
    
                 // Create a new Employee instance..
                 const employee = new Employee (response.name, response.employeeID, response.email);
-                console.log (`Created employee information is ${JSON.stringify(employee)}`);
-                console.log (`employee created`)
+        
+                // Push this instance of employee to the global array...
+                masterEmployeeList.push(employee);
    
                 // Create a new Intern instance... 
                 const intern = new Intern (response.name, response.employeeID, response.email, response.school);
-                console.log (`Created Intern information is ${JSON.stringify(intern)}`);
-                console.log (`Intern created`)
 
                 // Push this instance to the full team array
                 fullTeam.push(intern);
-                console.log("full team array is set to " + JSON.stringify(fullTeam));
  
                 // Set the value of the nextStep global variable to the selected next steps
                 nextStep = response.nextStep;
-                console.log(`Next step within set to ${nextStep}`);
+
             })
    
             // Then (if the above is successful) If they want to create another employee, invoke the appropraite function ELSE begin the team profile generation process..
             .then(() => {
-             console.log(`Next step on new .then is  ${nextStep} (should be same as above)`);
    
                 // If they want to add an engineer, call the createEngineer function
                 if (nextStep === "Add an Engineer") {
@@ -294,24 +285,154 @@
 
 
     // If the user selects to finish building the team profile....
-        const createTeamProfile = () => {
-         console.log(`createTeamProfile function invoked`);
-         console.log(`full team array is set to = ` + JSON.stringify(fullTeam));
-         console.log ('full team array item one is set to = ' + JSON.stringify(fullTeam[0]));
-         console.log (`property of full team array item 1 for name = ` + JSON.stringify(fullTeam[0].name));
+    const createTeamProfile = () => {
+
+         // First, write the base HTML file and create it in the directory
+baseHTML =`
+<!DOCTYPE html>
+<html lang="en">
+    <!--Document Head-->
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!--Bootstrap 5.0 CDN-->
+        <link 
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" 
+            rel="stylesheet" 
+            integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" 
+            crossorigin="anonymous"
+        >
+        <!--This is a google font awesome CDN-->
+        <link
+            rel="stylesheet"
+            href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+            integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf"
+            crossorigin="anonymous"
+        />
+        <title>Team Profile</title>
+    </head>
+    <!--Document Body-->
+    <body>
+        <!--Navbar-->
+        <nav class="navbar navbar-dark bg-secondary py-5 mb-3">
+            <span class="navbar-brand mb-0 h1 mx-auto fs-1">MyTeam <i class="fas fa-users"></i></span>
+        </nav>
+        <!--Main Section Page Container-->
+        <div class = "container">
+            <!--Main Row (Holding All Cards)-->
+            <div class="row row-cols-1 row-cols-md-2 g-4">
+
+            </div>
+        </div>
+        <!--Script Links-->
+            <!--Bootstrap 5.0 JS Bundle-->
+            <script 
+                src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" 
+                integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" 
+                crossorigin="anonymous">
+            </script>
+    </body>
+</html>
+`
+
+        // And write an html file that includes the base html with formatting and cdns...
+        writeFileAsync("./rendered_files_html/teamportfolio.html", baseHTML)
+
+        // Then, loop through the fullTeam array and create cards to input to the base html...
+        .then(() => {
+
+            // For each item in the full team array...
+            for ( i = 0; i<fullTeam.length; i++) {
+
+                // Depending on the members role, write one of three html content for them
+
+                    // If they are a manager...
+                    if (fullTeam[i].getRole() === "Manager") {
+
+                        // Create a manager card with their information...
+                        const managerCard = `
+                        <div class="col">
+                            <div class="card shadow rounded mx-3">
+                                <div class="card-body text-center text-light bg-success">
+                                    <h5 class="card-title fs-3">${fullTeam[i].name}</h5>
+                                    <h6>Manager</h6>
+                                    <span class="fs-2"><i class="fab fa-black-tie"></i></span>
+                                </div>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item"><span class="fw-bold">ID : </span>${fullTeam[i].employeeID}<span>Enter ID</span></li>
+                                    <li class="list-group-item"><span class="fw-bold">Email : </span>${fullTeam[i].email}<span>Enter Email</span></li>
+                                    <li class="list-group-item"><span class="fw-bold">Office # : </span><span>${fullTeam[i].officeNumber}</span></li>
+                                </ul>
+                            </div>
+                        </div>
+                        `;
+
+                        console.log ("Created div for manager is = " + managerCard);
+                    }
+
+                    // If they are an engineer...
+                    else if (fullTeam[i].getRole() === "Engineer") {
+                         
+                        // Create a manager card with their information...
+                        const engineerCard = `
+                        <div class="col">
+                            <div class="card shadow rounded mx-3">
+                                <div class="card-body text-center text-light bg-success">
+                                    <h5 class="card-title fs-3">${fullTeam[i].name}</h5>
+                                    <h6>Manager</h6>
+                                    <span class="fs-2"><i class="fab fa-black-tie"></i></span>
+                                </div>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item"><span class="fw-bold">ID : </span>${fullTeam[i].employeeID}<span>Enter ID</span></li>
+                                    <li class="list-group-item"><span class="fw-bold">Email : </span>${fullTeam[i].email}<span>Enter Email</span></li>
+                                    <li class="list-group-item"><span class="fw-bold">Github : </span><span>${fullTeam[i].github}</span></li>
+                                </ul>
+                            </div>
+                        </div>
+                        `;
+
+                        console.log ("Created div for engineer is = " + engineerCard);
+                    }
+
+                    // If they are an Intern...
+                    else if (fullTeam[i].getRole() === "Intern") {
+                         
+                        // Create an Intern card with their information...
+                        const internCard = `
+                        <div class="col">
+                            <div class="card shadow rounded mx-3">
+                                <div class="card-body text-center text-light bg-success">
+                                    <h5 class="card-title fs-3">${fullTeam[i].name}</h5>
+                                    <h6>Manager</h6>
+                                    <span class="fs-2"><i class="fab fa-black-tie"></i></span>
+                                </div>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item"><span class="fw-bold">ID : </span>${fullTeam[i].employeeID}<span>Enter ID</span></li>
+                                    <li class="list-group-item"><span class="fw-bold">Email : </span>${fullTeam[i].email}<span>Enter Email</span></li>
+                                    <li class="list-group-item"><span class="fw-bold">School : </span><span>${fullTeam[i].school}</span></li>
+                                </ul>
+                            </div>
+                        </div>
+                        `;
+
+                        console.log ("Created div for intern is = " + internCard);
+
+                    }
 
 
-         // Define the base HTML to be created for the page (container for employee cards)
+            }
 
-         // Write the base HTML file to the rendered_files_html page using my promisified writeFile...
+            
+        })
 
-         // Then, once that is completed, write the HTML file using the promisified fs writeFile function I created...
 
-            // Then, if no error is detected, console log "success"
 
-            // If an error is detected, catch it, console log an error and stop the function
+}
+         
+       
 
-        }
+        
 
 //-------------------------------------------------------------------------------------------------------------------
 // START THE PROGRAM BY INVOKING THE CREATE MANAGER FUNCTION
