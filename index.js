@@ -300,7 +300,7 @@
                                 </div>
                                 <ul class="list-group list-group-flush">
                                     <li class="list-group-item"><span class="fw-bold">ID : </span><span>${fullTeam[i].employeeID}</span></li>
-                                    <li class="list-group-item"><span class="fw-bold">Email : </span><span>${fullTeam[i].email}</span></li>
+                                    <li class="list-group-item"><span class="fw-bold">Email : </span><a href = "mailto:${fullTeam[i].email}">${fullTeam[i].email}</a></li>
                                     <li class="list-group-item"><span class="fw-bold">Office # : </span><span>${fullTeam[i].officeNumber}</span></li>
                                 </ul>
                             </div>
@@ -325,7 +325,7 @@
                             </div>
                             <ul class="list-group list-group-flush">
                                 <li class="list-group-item"><span class="fw-bold">ID : </span><span>${fullTeam[i].employeeID}</span></li>
-                                <li class="list-group-item"><span class="fw-bold">Email : </span><span>${fullTeam[i].email}</span></li>
+                                <li class="list-group-item"><span class="fw-bold">Email : </span><a href = "mailto:${fullTeam[i].email}">${fullTeam[i].email}</a></li>
                                 <li class="list-group-item"><span class="fw-bold">Github : </span><a href = "https://www.github.com/${fullTeam[i].github}">${fullTeam[i].github}</a></li>
                             </ul>
                         </div>
@@ -350,7 +350,7 @@
                             </div>
                             <ul class="list-group list-group-flush">
                                 <li class="list-group-item"><span class="fw-bold">ID : </span><span>${fullTeam[i].employeeID}</span></li>
-                                <li class="list-group-item"><span class="fw-bold">Email : </span><span>${fullTeam[i].email}</span></li>
+                                <li class="list-group-item"><span class="fw-bold">Email : </span><a href = "mailto:${fullTeam[i].email}">${fullTeam[i].email}</a></li>
                                 <li class="list-group-item"><span class="fw-bold">School : </span><span>${fullTeam[i].school}</span></li>
                             </ul>
                         </div>
