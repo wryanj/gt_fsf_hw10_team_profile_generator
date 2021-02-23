@@ -161,7 +161,6 @@
 
             })
 
-   
             // Then (if the above is successful) If they want to create another employee, invoke the appropraite function ELSE begin the team profile generation process..
             .then(() => {
 
@@ -194,7 +193,7 @@
 
                 // Create a new employee instance..
                 const employee = new Employee (response.name, response.employeeID, response.email);
-                
+
                 // Push this instance of employee to the global array to be stored...
                 masterEmployeeList.push(employee);
 
@@ -321,7 +320,7 @@
                         <div class="card shadow rounded mx-3">
                             <div class="card-body text-center text-light bg-success">
                                 <h5 class="card-title fs-3">${fullTeam[i].name}</h5>
-                                <h6>Manager</h6>
+                                <h6>Engineer</h6>
                                 <span class="fs-2"><i class="fas fa-hard-hat"></i></i></span>
                             </div>
                             <ul class="list-group list-group-flush">
@@ -346,7 +345,7 @@
                         <div class="card shadow rounded mx-3">
                             <div class="card-body text-center text-light bg-success">
                                 <h5 class="card-title fs-3">${fullTeam[i].name}</h5>
-                                <h6>Manager</h6>
+                                <h6>Intern</h6>
                                 <span class="fs-2"><i class="fas fa-graduation-cap"></i></span>
                             </div>
                             <ul class="list-group list-group-flush">
@@ -414,9 +413,7 @@
             </body>
         </html>
         `
-        console.log("created html = " + createdHTML);
-        console.log(typeof createdHTML);
-    
+        
        // And call the writeProfile function
         writeFileAsync("./rendered_files_html/teamportfolio.html", createdHTML)
 
