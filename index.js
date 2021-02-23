@@ -17,8 +17,9 @@
     let nextStep;
     let masterEmployeeList = [];
     let fullTeam = [];
-    let employeeCardsArray = [];
-    let baseHTML;
+    let finalProfileCardsArray = [];
+    let finalProfileCardsArrayJoined;
+    let createdHTML;
 
     // Use promisify to convert fs.writeFile method so that it returns a promis object
     const writeFileAsync = util.promisify(fs.writeFile);
@@ -127,15 +128,15 @@
     }
 
 
+  
 //-------------------------------------------------------------------------------------------------------------------
 // DEFINE SEQUENCE FOR ASYCHRONOUS LOGIC EXECUTION
 //-------------------------------------------------------------------------------------------------------------------
 
     // (PROGRAM START) Start the program by creating a new manager (and by making sure the arrays for created employees is at 0)
     const createManager = () => {
-    masterEmployeeList = [];
-    fullTeam = [];
-    employeeCardsArray = [];
+     masterEmployeeList = [];
+     fullTeam = [];
 
         // Upon start of application (createManager invoked) prompt user for manager information (and next steps selection)
         promptForManagerInfo()
@@ -282,102 +283,16 @@
     // If the user selects to finish building the team profile....
     const createTeamProfile = () => {
 
-// First, write the base HTML file and create it in the directory
-baseHTML =`
-<!DOCTYPE html>
-<html lang="en">
-    <!--Document Head-->
-    <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <!--Bootstrap 5.0 CDN-->
-        <link 
-            href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" 
-            rel="stylesheet" 
-            integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" 
-            crossorigin="anonymous"
-        >
-        <!--This is a google font awesome CDN-->
-        <link
-            rel="stylesheet"
-            href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
-            integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf"
-            crossorigin="anonymous"
-        />
-        <title>Team Profile</title>
-    </head>
-    <!--Document Body-->
-    <body>
-        <!--Navbar-->
-        <nav class="navbar navbar-dark bg-secondary py-5 mb-3">
-            <span class="navbar-brand mb-0 h1 mx-auto fs-1">MyTeam <i class="fas fa-users"></i></span>
-        </nav>
-        <!--Main Section Page Container-->
-        <div class = "container">
-            <!--Main Row (Holding All Cards)-->
-            <div class="row row-cols-1 row-cols-md-2 g-4">
+        // First, For each item in the full team array...
+        for ( i = 0; i<fullTeam.length; i++) {
 
-            </div>
-        </div>
-        <!--Script Links-->
-            <!--Bootstrap 5.0 JS Bundle-->
-            <script 
-                src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" 
-                integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" 
-                crossorigin="anonymous">
-            </script>
-    </body>
-</html>
-`
+            // Depending on the members role, write one of three html content divs for them...
 
-        // And write an html file that includes the base html with formatting and cdns...
-        writeFileAsync("./rendered_files_html/teamportfolio.html", baseHTML)
+                // If they are a manager...
+                if (fullTeam[i].getRole() === "Manager") {
 
-        // Then, loop through the fullTeam array and create cards to input to the base html...
-        .then(() => {
-
-            // For each item in the full team array...
-            for ( i = 0; i<fullTeam.length; i++) {
-
-                // Depending on the members role, write one of three html content for them...
-
-                    // If they are a manager...
-                    if (fullTeam[i].getRole() === "Manager") {
-
-                        // Create an object with for a manager card with their information...
-                        const managerCard = {
-                        cardName: fullTeam[i].name,
-                        cardContent: `
-                            <div class="col">
-                                <div class="card shadow rounded mx-3">
-                                    <div class="card-body text-center text-light bg-success">
-                                        <h5 class="card-title fs-3">${fullTeam[i].name}</h5>
-                                        <h6>Manager</h6>
-                                        <span class="fs-2"><i class="fab fa-black-tie"></i></span>
-                                    </div>
-                                    <ul class="list-group list-group-flush">
-                                        <li class="list-group-item"><span class="fw-bold">ID : </span>${fullTeam[i].employeeID}<span>Enter ID</span></li>
-                                        <li class="list-group-item"><span class="fw-bold">Email : </span>${fullTeam[i].email}<span>Enter Email</span></li>
-                                        <li class="list-group-item"><span class="fw-bold">Office # : </span><span>${fullTeam[i].officeNumber}</span></li>
-                                    </ul>
-                                </div>
-                            </div>
-                            `
-                        }
-                        console.log ("Created div for manager is = " + managerCard);
-
-                        // Push that object card into the array
-                        employeeCardsArray.push(managerCard);
-                    }
-
-                    // If they are an engineer...
-                    else if (fullTeam[i].getRole() === "Engineer") {
-                         
-                        // Create a manager card with their information...
-                        const engineerCard = {
-                        cardName: fullTeam[i].name,
-                        cardContent: `
+                    // Create content for a manager card with their information...
+                    const managerCard = `
                         <div class="col">
                             <div class="card shadow rounded mx-3">
                                 <div class="card-body text-center text-light bg-success">
@@ -386,64 +301,135 @@ baseHTML =`
                                     <span class="fs-2"><i class="fab fa-black-tie"></i></span>
                                 </div>
                                 <ul class="list-group list-group-flush">
-                                    <li class="list-group-item"><span class="fw-bold">ID : </span>${fullTeam[i].employeeID}<span>Enter ID</span></li>
-                                    <li class="list-group-item"><span class="fw-bold">Email : </span>${fullTeam[i].email}<span>Enter Email</span></li>
-                                    <li class="list-group-item"><span class="fw-bold">Github : </span><span>${fullTeam[i].github}</span></li>
+                                    <li class="list-group-item"><span class="fw-bold">ID : </span><span>${fullTeam[i].employeeID}</span></li>
+                                    <li class="list-group-item"><span class="fw-bold">Email : </span><span>${fullTeam[i].email}</span></li>
+                                    <li class="list-group-item"><span class="fw-bold">Office # : </span><span>${fullTeam[i].officeNumber}</span></li>
                                 </ul>
                             </div>
                         </div>
                         `
-                        }
-                        console.log ("Created div for engineer is = " + engineerCard);
 
-                        // Push that object card into the array
-                        employeeCardsArray.push(engineerCard);
-                    }
+                    // And push that div into the array...
+                    finalProfileCardsArray.push(managerCard);
+                }
 
-                    // If they are an Intern...
-                    else if (fullTeam[i].getRole() === "Intern") {
-                         
-                        // Create an Intern card with their information...
-                        const internCard = { 
-                        cardName: fullTeam[i],
-                        cardContent:`
-                        <div class="col">
-                            <div class="card shadow rounded mx-3">
-                                <div class="card-body text-center text-light bg-success">
-                                    <h5 class="card-title fs-3">${fullTeam[i].name}</h5>
-                                    <h6>Manager</h6>
-                                    <span class="fs-2"><i class="fab fa-black-tie"></i></span>
-                                </div>
-                                <ul class="list-group list-group-flush">
-                                    <li class="list-group-item"><span class="fw-bold">ID : </span>${fullTeam[i].employeeID}<span>Enter ID</span></li>
-                                    <li class="list-group-item"><span class="fw-bold">Email : </span>${fullTeam[i].email}<span>Enter Email</span></li>
-                                    <li class="list-group-item"><span class="fw-bold">School : </span><span>${fullTeam[i].school}</span></li>
-                                </ul>
+                // If they are an engineer...
+                else if (fullTeam[i].getRole() === "Engineer") {
+                     
+                    // Create an engineer card with their information...
+                    const engineerCard = `
+                    <div class="col">
+                        <div class="card shadow rounded mx-3">
+                            <div class="card-body text-center text-light bg-success">
+                                <h5 class="card-title fs-3">${fullTeam[i].name}</h5>
+                                <h6>Manager</h6>
+                                <span class="fs-2"><i class="fab fa-black-tie"></i></span>
                             </div>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item"><span class="fw-bold">ID : </span><span>${fullTeam[i].employeeID}</span></li>
+                                <li class="list-group-item"><span class="fw-bold">Email : </span><span>${fullTeam[i].email}</span></li>
+                                <li class="list-group-item"><span class="fw-bold">Github : </span><span>${fullTeam[i].github}</span></li>
+                            </ul>
                         </div>
-                        `
-                         }
-                        console.log ("Created div for intern is = " + internCard);
+                    </div>
+                    `
 
-                        // Push that object card into the array
-                        employeeCardsArray.push(internCard);
+                    // And push that div into the array...
+                    finalProfileCardsArray.push(engineerCard);
+                }
 
-                    }
+                // If they are an Intern...
+                else if (fullTeam[i].getRole() === "Intern") {
+                     
+                    // Create an Intern card with their information...
+                    const internCard = `
+                    <div class="col">
+                        <div class="card shadow rounded mx-3">
+                            <div class="card-body text-center text-light bg-success">
+                                <h5 class="card-title fs-3">${fullTeam[i].name}</h5>
+                                <h6>Manager</h6>
+                                <span class="fs-2"><i class="fab fa-black-tie"></i></span>
+                            </div>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item"><span class="fw-bold">ID : </span><span>${fullTeam[i].employeeID}</span></li>
+                                <li class="list-group-item"><span class="fw-bold">Email : </span><span>${fullTeam[i].email}</span></li>
+                                <li class="list-group-item"><span class="fw-bold">School : </span><span>${fullTeam[i].school}</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                    `
 
+                    // And push that card into the array
+                    finalProfileCardsArray.push(internCard);
+                }
+        }
 
-            }
+        // After that, set the finalProfileCardsArrayJoined variable to the value of the finalProfileCardsArra being joined as a string...
+        finalProfileCardsArrayJoined = finalProfileCardsArray.join("\n");
 
-            
-        })
+        // Then, create some base HTML while inserting the created divs joined as a single string into the right spot...
+        createdHTML =`
+        <!DOCTYPE html>
+        <html lang="en">
+            <!--Document Head-->
+            <head>
+                <meta charset="UTF-8">
+                <meta http-equiv="X-UA-Compatible" content="IE=edge">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <!--Bootstrap 5.0 CDN-->
+                <link 
+                    href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" 
+                    rel="stylesheet" 
+                    integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" 
+                    crossorigin="anonymous"
+                >
+                <!--This is a google font awesome CDN-->
+                <link
+                    rel="stylesheet"
+                    href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+                    integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf"
+                    crossorigin="anonymous"
+                />
+                <title>Team Profile</title>
+            </head>
+            <!--Document Body-->
+            <body>
+                <!--Navbar-->
+                <nav class="navbar navbar-dark bg-secondary py-5 mb-3">
+                    <span class="navbar-brand mb-0 h1 mx-auto fs-1">MyTeam <i class="fas fa-users"></i></span>
+                </nav>
+                <!--Main Section Page Container-->
+                <div class = "container">
+                    <!--Main Row (Holding All Cards)-->
+                    <div class="row row-cols-1 row-cols-md-2 g-4 insertCards">
+                        ${finalProfileCardsArrayJoined}
+                    </div>
+                </div>
+                <!--Script Links-->
+                    <!--Bootstrap 5.0 JS Bundle-->
+                    <script 
+                        src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" 
+                        integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" 
+                        crossorigin="anonymous">
+                    </script>
+            </body>
+        </html>
+        `
+        console.log("created html = " + createdHTML);
+        console.log(typeof createdHTML);
+    
+       /* // And call the writeProfile function
+        writeFileAsync("./rendered_files_html/teamportfolio.html", createdHTML)
 
+            // Then, ....
+            .then(() => console.log("Team Profile Has Been Created Successfully!"))
 
+            // If there is an error, log the error...
+            .catch(err => console.error(err)); 
+        */
+    } 
 
-}
-         
-       
-
-        
-
+    
 //-------------------------------------------------------------------------------------------------------------------
 // START THE PROGRAM BY INVOKING THE CREATE MANAGER FUNCTION
 //-------------------------------------------------------------------------------------------------------------------
