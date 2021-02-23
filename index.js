@@ -25,7 +25,7 @@
     const writeFileAsync = util.promisify(fs.writeFile);
 
 //-------------------------------------------------------------------------------------------------------------------
-// FUNCTIONAL PROGRAM LOGIC TO BE EXECUTED UPON INVOKATOIN OF CREATE MANAGER & SUBSEQUENT FUNCTIONS AT SCRIPT BOTTOM
+// FUNCTIONAL PROGRAM LOGIC TO BE EXECUTED UPON INVOKATOIN OF INIT FUNCTION AND SUBSEQUENT FUNCTIONS AT SCRIPT BOTTOM
 //-------------------------------------------------------------------------------------------------------------------
 
     // When the application starts (which invokes this function), prompt the user to enter manager info (name,employeeID,email,officeNumber)
@@ -135,30 +135,22 @@
 
     // (PROGRAM START) Start the program by creating a new manager (and by making sure the arrays for created employees is at 0)
     const createManager = () => {
-     masterEmployeeList = [];
-     fullTeam = [];
 
         // Upon start of application (createManager invoked) prompt user for manager information (and next steps selection)
         promptForManagerInfo()
 
             // Then, when manager information is completed, take the managerResponse..
             .then(response => {
-
-                // Create a new employee instance..
+                // Create a new employee instance and push to the global array for master employees..
                 const employee = new Employee (response.name, response.employeeID, response.email);
-
-                // Push this instance of employees to a global array as an object to be stored...
                 masterEmployeeList.push(employee);
 
-                // Create a new manager instance... (Ask question on this, feels redundant. Do I have to creat new employee and manager separate?)
+                // Create a new manager instance and push to the global array for full team
                 manager = new Manager (response.name, response.employeeID, response.email, response.officeNumber);
-
-                // Push this instance to the new team array as an instance of the object to be stored...
-                fullTeam.push(manager)
+                fullTeam.push(manager);
 
                 // Set the value of the nextStep global variable to the selected next steps
                 nextStep = response.nextStep;
-
             })
 
             // Then (if the above is successful) If they want to create another employee, invoke the appropraite function ELSE begin the team profile generation process..
@@ -191,26 +183,20 @@
             // Then, when manager information is completed, take the EngineerResponse and..
             .then(response => {
 
-                // Create a new employee instance..
+                // Create a new employee instance and push to the global array for master employees
                 const employee = new Employee (response.name, response.employeeID, response.email);
-
-                // Push this instance of employee to the global array to be stored...
                 masterEmployeeList.push(employee);
 
-                // Create a new Engineer instance... 
+                // Create a new Engineer instance and push to the global array for full team
                 const engineer = new Engineer (response.name, response.employeeID, response.email, response.github);
-
-                // Push this instance of engineer to the full team array to be stored...
                 fullTeam.push(engineer);
-              
+
                 // Set the value of the nextStep global variable to the selected next steps
                 nextStep = response.nextStep;
-
             })
 
             // Then (if the above is successful) If they want to create another employee, invoke the appropraite function ELSE begin the team profile generation process..
             .then(() => {
-
                 // If they want to add an engineer, call the createEngineer function
                 if (nextStep === "Add an Engineer") {
                     createEngineer();
@@ -238,22 +224,17 @@
    
             // Then, when manager information is completed, take the EngineerResponse and..
             .then(response => {
-   
-                // Create a new Employee instance..
-                const employee = new Employee (response.name, response.employeeID, response.email);
-        
-                // Push this instance of employee to the global array...
-                masterEmployeeList.push(employee);
-   
-                // Create a new Intern instance... 
-                const intern = new Intern (response.name, response.employeeID, response.email, response.school);
 
-                // Push this instance to the full team array
+                // Create a new Employee instance & push to the global array for master employees...
+                const employee = new Employee (response.name, response.employeeID, response.email);
+                masterEmployeeList.push(employee);
+
+                // Create a new Intern instance and push to the global array for full team... 
+                const intern = new Intern (response.name, response.employeeID, response.email, response.school);
                 fullTeam.push(intern);
- 
+
                 // Set the value of the nextStep global variable to the selected next steps
                 nextStep = response.nextStep;
-
             })
    
             // Then (if the above is successful) If they want to create another employee, invoke the appropraite function ELSE begin the team profile generation process..
@@ -365,7 +346,7 @@
         // After that, set the finalProfileCardsArrayJoined variable to the value of the finalProfileCardsArra being joined as a string...
         finalProfileCardsArrayJoined = finalProfileCardsArray.join("\n");
 
-        // Then, create some base HTML while inserting the created divs joined as a single string into the right spot...
+        // And create some base HTML while inserting the created divs joined as a single string into the right spot...
         createdHTML =`
         <!DOCTYPE html>
         <html lang="en">
@@ -417,7 +398,7 @@
        // And call the writeProfile function
         writeFileAsync("./rendered_files_html/teamportfolio.html", createdHTML)
 
-            // Then, ....
+            // Then log success if its successful, ....
             .then(() => console.log("Team Profile Has Been Created Successfully!"))
 
             // If there is an error, log the error...
@@ -426,8 +407,21 @@
 
     
 //-------------------------------------------------------------------------------------------------------------------
-// START THE PROGRAM BY INVOKING THE CREATE MANAGER FUNCTION
+// WRAP STARTING SEQUENCE INTO AN INIT FUNCTION
 //-------------------------------------------------------------------------------------------------------------------
 
-    // Invoke the createMAnager function, which starts the sequence of events to create a team profile
-    createManager();
+    // Invoke the createManager function, which starts the sequence of events to create a team profile
+    const init = () => {
+        //Reset values of arrays populated during program sequence
+        masterEmployeeList = [];
+        fullTeam = [];
+        // Call the first prompt
+        createManager();
+    }
+
+//-------------------------------------------------------------------------------------------------------------------
+// START THE PROGRAM BY INVOKING THE INITFUNCTION
+//-------------------------------------------------------------------------------------------------------------------
+
+    // Invoke init (start the sequence)
+    init();
