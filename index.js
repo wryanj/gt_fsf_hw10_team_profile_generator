@@ -15,7 +15,6 @@
 
     // Define a global array of employees to pull from when generating the HTML content (array is added to as new classes are created)
     let nextStep;
-    let masterEmployeeList = []; // not used yet
     let fullTeam = [];
     let finalProfileCardsArray = [];
     let finalProfileCardsArrayJoined;
@@ -141,10 +140,7 @@
 
             // Then, when manager information is completed, take the managerResponse..
             .then(response => {
-                // Create a new employee instance and push to the global array for master employees..
-                const employee = new Employee (response.name, response.employeeID, response.email);
-                masterEmployeeList.push(employee);
-
+                
                 // Create a new manager instance and push to the global array for full team
                 manager = new Manager (response.name, response.employeeID, response.email, response.officeNumber);
                 fullTeam.push(manager);
@@ -183,10 +179,6 @@
             // Then, when manager information is completed, take the EngineerResponse and..
             .then(response => {
 
-                // Create a new employee instance and push to the global array for master employees
-                const employee = new Employee (response.name, response.employeeID, response.email);
-                masterEmployeeList.push(employee);
-
                 // Create a new Engineer instance and push to the global array for full team
                 const engineer = new Engineer (response.name, response.employeeID, response.email, response.github);
                 fullTeam.push(engineer);
@@ -224,10 +216,6 @@
    
             // Then, when manager information is completed, take the EngineerResponse and..
             .then(response => {
-
-                // Create a new Employee instance & push to the global array for master employees...
-                const employee = new Employee (response.name, response.employeeID, response.email);
-                masterEmployeeList.push(employee);
 
                 // Create a new Intern instance and push to the global array for full team... 
                 const intern = new Intern (response.name, response.employeeID, response.email, response.school);
@@ -338,10 +326,10 @@
             }
         }
 
-        // After that, set the finalProfileCardsArrayJoined variable to the value of the finalProfileCardsArra being joined as a string...
+        // After creating the profile cards, set the finalProfileCardsArrayJoined variable to the value of the finalProfileCardsArra being joined as a string...
         finalProfileCardsArrayJoined = finalProfileCardsArray.join("\n");
 
-        // And create some base HTML while inserting the created divs joined as a single string into the right spot...
+        // And create some base HTML with the joined string of html cards placed in the right location...
         createdHTML =`
         <!DOCTYPE html>
         <html lang="en">
@@ -390,7 +378,7 @@
         </html>
         `
         
-       // And call the writeProfile function
+       // Lastly, call the writeProfile function to generate the html page with formatting and cards populated...
         writeFileAsync("./rendered_files_html/teamportfolio.html", createdHTML)
 
             // Then log success if its successful, ....
