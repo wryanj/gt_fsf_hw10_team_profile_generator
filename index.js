@@ -326,7 +326,7 @@
                             <ul class="list-group list-group-flush">
                                 <li class="list-group-item"><span class="fw-bold">ID : </span><span>${fullTeam[i].employeeID}</span></li>
                                 <li class="list-group-item"><span class="fw-bold">Email : </span><span>${fullTeam[i].email}</span></li>
-                                <li class="list-group-item"><span class="fw-bold">Github : </span><span>${fullTeam[i].github}</span></li>
+                                <li class="list-group-item"><span class="fw-bold">Github : </span><a href = "https://www.github.com/${fullTeam[i].github}">${fullTeam[i].github}</a></li>
                             </ul>
                         </div>
                     </div>
