@@ -259,44 +259,41 @@
     }
 
 
-    // If the user selects to finish building the team profile....
+    // Once the user selects to finish building the team profile, build the profile in HTML....
     const createTeamProfile = () => {
 
-        // First, For each item in the full team array...
+        // First, For each item in the full team array loop through and create a "profile card" for them based on their role type...
         for ( i = 0; i<fullTeam.length; i++) {
 
-            // Depending on the members role, write one of three html content divs for them...
+            // If they are a manager...
+            if (fullTeam[i].getRole() === "Manager") {
 
-                // If they are a manager...
-                if (fullTeam[i].getRole() === "Manager") {
-
-                    // Create content for a manager card with their information...
-                    const managerCard = `
-                        <div class="col">
-                            <div class="card shadow rounded mx-3">
-                                <div class="card-body text-center text-light bg-success">
-                                    <h5 class="card-title fs-3">${fullTeam[i].name}</h5>
-                                    <h6>Manager</h6>
-                                    <span class="fs-2"><i class="fab fa-black-tie"></i></span>
-                                </div>
-                                <ul class="list-group list-group-flush">
-                                    <li class="list-group-item"><span class="fw-bold">ID : </span><span>${fullTeam[i].employeeID}</span></li>
-                                    <li class="list-group-item"><span class="fw-bold">Email : </span><a href = "mailto:${fullTeam[i].email}">${fullTeam[i].email}</a></li>
-                                    <li class="list-group-item"><span class="fw-bold">Office # : </span><span>${fullTeam[i].officeNumber}</span></li>
-                                </ul>
+                // Create content for a manager card with their information...
+                const managerCard = `
+                    <div class="col">
+                        <div class="card shadow rounded mx-3">
+                            <div class="card-body text-center text-light bg-success">
+                                <h5 class="card-title fs-3">${fullTeam[i].name}</h5>
+                                <h6>Manager</h6>
+                                <span class="fs-2"><i class="fab fa-black-tie"></i></span>
                             </div>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item"><span class="fw-bold">ID : </span><span>${fullTeam[i].employeeID}</span></li>
+                                <li class="list-group-item"><span class="fw-bold">Email : </span><a href = "mailto:${fullTeam[i].email}">${fullTeam[i].email}</a></li>
+                                <li class="list-group-item"><span class="fw-bold">Office # : </span><span>${fullTeam[i].officeNumber}</span></li>
+                            </ul>
                         </div>
-                        `
+                    </div>
+                `
+                // And push that div into the array...
+                finalProfileCardsArray.push(managerCard);
+            }
 
-                    // And push that div into the array...
-                    finalProfileCardsArray.push(managerCard);
-                }
-
-                // If they are an engineer...
-                else if (fullTeam[i].getRole() === "Engineer") {
+            // If they are an engineer...
+            else if (fullTeam[i].getRole() === "Engineer") {
                      
-                    // Create an engineer card with their information...
-                    const engineerCard = `
+                // Create an engineer card with their information...
+                const engineerCard = `
                     <div class="col">
                         <div class="card shadow rounded mx-3">
                             <div class="card-body text-center text-light bg-success">
@@ -311,17 +308,16 @@
                             </ul>
                         </div>
                     </div>
-                    `
+                `
+                // And push that div into the array...
+                finalProfileCardsArray.push(engineerCard);
+            }
 
-                    // And push that div into the array...
-                    finalProfileCardsArray.push(engineerCard);
-                }
-
-                // If they are an Intern...
-                else if (fullTeam[i].getRole() === "Intern") {
+            // If they are an Intern...
+            else if (fullTeam[i].getRole() === "Intern") {
                      
-                    // Create an Intern card with their information...
-                    const internCard = `
+                // Create an Intern card with their information...
+                const internCard = `
                     <div class="col">
                         <div class="card shadow rounded mx-3">
                             <div class="card-body text-center text-light bg-success">
@@ -336,11 +332,10 @@
                             </ul>
                         </div>
                     </div>
-                    `
-
-                    // And push that card into the array
-                    finalProfileCardsArray.push(internCard);
-                }
+                `
+                // And push that card into the array
+                finalProfileCardsArray.push(internCard);
+            }
         }
 
         // After that, set the finalProfileCardsArrayJoined variable to the value of the finalProfileCardsArra being joined as a string...
