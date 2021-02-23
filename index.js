@@ -15,7 +15,7 @@
 
     // Define a global array of employees to pull from when generating the HTML content (array is added to as new classes are created)
     let nextStep;
-    let masterEmployeeList = [];
+    let masterEmployeeList = []; // not used yet
     let fullTeam = [];
     let finalProfileCardsArray = [];
     let finalProfileCardsArrayJoined;
@@ -191,7 +191,6 @@
 
             // Then, when manager information is completed, take the EngineerResponse and..
             .then(response => {
-            console.log(response);
 
                 // Create a new employee instance..
                 const employee = new Employee (response.name, response.employeeID, response.email);
@@ -323,7 +322,7 @@
                             <div class="card-body text-center text-light bg-success">
                                 <h5 class="card-title fs-3">${fullTeam[i].name}</h5>
                                 <h6>Manager</h6>
-                                <span class="fs-2"><i class="fab fa-black-tie"></i></span>
+                                <span class="fs-2"><i class="fas fa-hard-hat"></i></i></span>
                             </div>
                             <ul class="list-group list-group-flush">
                                 <li class="list-group-item"><span class="fw-bold">ID : </span><span>${fullTeam[i].employeeID}</span></li>
@@ -348,7 +347,7 @@
                             <div class="card-body text-center text-light bg-success">
                                 <h5 class="card-title fs-3">${fullTeam[i].name}</h5>
                                 <h6>Manager</h6>
-                                <span class="fs-2"><i class="fab fa-black-tie"></i></span>
+                                <span class="fs-2"><i class="fas fa-graduation-cap"></i></span>
                             </div>
                             <ul class="list-group list-group-flush">
                                 <li class="list-group-item"><span class="fw-bold">ID : </span><span>${fullTeam[i].employeeID}</span></li>
@@ -418,7 +417,7 @@
         console.log("created html = " + createdHTML);
         console.log(typeof createdHTML);
     
-       /* // And call the writeProfile function
+       // And call the writeProfile function
         writeFileAsync("./rendered_files_html/teamportfolio.html", createdHTML)
 
             // Then, ....
@@ -426,7 +425,6 @@
 
             // If there is an error, log the error...
             .catch(err => console.error(err)); 
-        */
     } 
 
     
