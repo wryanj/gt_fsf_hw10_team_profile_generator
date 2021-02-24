@@ -132,7 +132,7 @@
 // DEFINE SEQUENCE FOR ASYCHRONOUS LOGIC EXECUTION
 //-------------------------------------------------------------------------------------------------------------------
 
-    // (PROGRAM START) Start the program by creating a new manager (and by making sure the arrays for created employees is at 0)
+    // (PROGRAM START) Start the program by creating a new manager (this is invoked with the init function)
     const createManager = () => {
 
         // Upon start of application (createManager invoked) prompt user for manager information (and next steps selection)
@@ -150,7 +150,7 @@
             })
 
             // Then (if the above is successful) If they want to create another employee, invoke the appropraite function ELSE begin the team profile generation process..
-            .then(() => {
+            .then( () => {
 
                 // If they want to add an engineer, call the createEngineer function
                 if (nextStep === "Add an Engineer") {
@@ -188,7 +188,7 @@
             })
 
             // Then (if the above is successful) If they want to create another employee, invoke the appropraite function ELSE begin the team profile generation process..
-            .then(() => {
+            .then( () => {
                 // If they want to add an engineer, call the createEngineer function
                 if (nextStep === "Add an Engineer") {
                     createEngineer();
@@ -226,7 +226,7 @@
             })
    
             // Then (if the above is successful) If they want to create another employee, invoke the appropraite function ELSE begin the team profile generation process..
-            .then(() => {
+            .then( () => {
    
                 // If they want to add an engineer, call the createEngineer function
                 if (nextStep === "Add an Engineer") {
@@ -395,10 +395,10 @@
 
     // Invoke the createManager function, which starts the sequence of events to create a team profile
     const init = () => {
-        //Reset values of arrays populated during program sequence
+        //Reset values of arrays populated during program sequence to always ensure they are set to zero..
         masterEmployeeList = [];
         fullTeam = [];
-        // Call the first prompt
+        // And Call the first prompt asking for manager information..
         createManager();
     }
 
