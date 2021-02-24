@@ -1,7 +1,7 @@
 {
   "name": "gt_fsf_hw10_team_profile_generator",
   "version": "1.0.0",
-  "description": "Dependencies for team profile generator",
+  "description": "Automatically write a team profile html page using node js and inquiere",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
