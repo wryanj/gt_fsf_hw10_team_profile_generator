@@ -34,7 +34,13 @@
             {
                 type: "input",
                 name: "name",
-                message: "Please enter the manager's name"
+                message: "Please enter the manager's name",
+                validate: async (input) => {
+                    if (input === "") {
+                        return "Please make sure you enter a name, and that your only using letters"
+                    }
+                    return true 
+                }
             },
             {
                 type: "input",
@@ -140,7 +146,7 @@
 
             // Then, when manager information is completed, take the managerResponse..
             .then(response => {
-                
+
                 // Create a new manager instance and push to the global array for full team
                 manager = new Manager (response.name, response.employeeID, response.email, response.officeNumber);
                 fullTeam.push(manager);

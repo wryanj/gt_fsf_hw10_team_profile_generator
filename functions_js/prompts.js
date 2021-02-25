@@ -1,4 +1,4 @@
-/* 
+ 
 
 // NOT USED YET- COPIED OVER
 
@@ -118,4 +118,4 @@
 // EXPORTING FOR USE IN INDEXJS
 //-------------------------------------------------------------------------------------------------------------------
 
-    // fill out module.exports correctly...
+    module.exports = promptForManagerInfo;
