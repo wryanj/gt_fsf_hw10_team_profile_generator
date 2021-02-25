@@ -45,17 +45,35 @@
             {
                 type: "input",
                 name: "employeeID",
-                message: "Please enter the manager's employee ID"
+                message: "Please enter the manager's employee ID",
+                validate: async (input) => {
+                    if (input === "") {
+                        return "Please make sure you enter a name, and that your only using letters"
+                    }
+                    return true 
+                }
             },
             {
                 type: "input",
                 name: "email",
-                message: "Please enter the manager's email address"
+                message: "Please enter the manager's email address",
+                validate: async (input) => {
+                    if (input === "") {
+                        return "Please make sure you enter a name, and that your only using letters"
+                    }
+                    return true 
+                }
             },
             {
                 type: "input",
                 name: "officeNumber",
-                message: "Please enter the manager's office number"
+                message: "Please enter the manager's office number",
+                validate: async (input) => {
+                    if (input === "") {
+                        return "Please make sure you enter a name, and that your only using letters"
+                    }
+                    return true 
+                }
             },
             {
                 type: "list",
@@ -73,22 +91,46 @@
             {
                 type: "input",
                 name: "name",
-                message: "Please enter the engineer's name"
+                message: "Please enter the engineer's name",
+                validate: async (input) => {
+                    if (input === "") {
+                        return "Please make sure you enter a name, and that your only using letters"
+                    }
+                    return true 
+                }
             },
             {
                 type: "input",
                 name: "employeeID",
-                message: "Please enter the engineer's employee ID"
+                message: "Please enter the engineer's employee ID",
+                validate: async (input) => {
+                    if (input === "") {
+                        return "Please make sure you enter a name, and that your only using letters"
+                    }
+                    return true 
+                }
             },
             {
                 type: "input",
                 name: "email",
-                message: "Please enter the engineer's email address"
+                message: "Please enter the engineer's email address",
+                validate: async (input) => {
+                    if (input === "") {
+                        return "Please make sure you enter a name, and that your only using letters"
+                    }
+                    return true 
+                }
             },
             {
                 type: "input",
                 name: "github",
-                message: "Please enter the engineers Github user name"
+                message: "Please enter the engineers Github user name",
+                validate: async (input) => {
+                    if (input === "") {
+                        return "Please make sure you enter a name, and that your only using letters"
+                    }
+                    return true 
+                }
             },
             {
                 type: "list",
@@ -106,22 +148,46 @@
             {
                 type: "input",
                 name: "name",
-                message: "Please enter the intern's name"
+                message: "Please enter the intern's name",
+                validate: async (input) => {
+                    if (input === "") {
+                        return "Please make sure you enter a name, and that your only using letters"
+                    }
+                    return true 
+                }
             },
             {
                 type: "input",
                 name: "employeeID",
-                message: "Please enter the intern's employee ID"
+                message: "Please enter the intern's employee ID",
+                validate: async (input) => {
+                    if (input === "") {
+                        return "Please make sure you enter a name, and that your only using letters"
+                    }
+                    return true 
+                }
             },
             {
                 type: "input",
                 name: "email",
-                message: "Please enter the intern's email address"
+                message: "Please enter the intern's email address",
+                validate: async (input) => {
+                    if (input === "") {
+                        return "Please make sure you enter a name, and that your only using letters"
+                    }
+                    return true 
+                }
             },
             {
                 type: "input",
                 name: "school",
-                message: "Please enter the interns's school"
+                message: "Please enter the interns's school",
+                validate: async (input) => {
+                    if (input === "") {
+                        return "Please make sure you enter a name, and that your only using letters"
+                    }
+                    return true 
+                }
             },
             {
                 type: "list",
