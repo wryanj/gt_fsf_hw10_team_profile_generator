@@ -36,7 +36,7 @@
                 name: "name",
                 message: "Please enter the manager's name",
                 validate: async (input) => {
-                    if (input === "") {
+                    if (input === "" || isNaN(input) === false) {
                         return "Please make sure you enter a name, and that your only using letters"
                     }
                     return true 
@@ -47,8 +47,8 @@
                 name: "employeeID",
                 message: "Please enter the manager's employee ID",
                 validate: async (input) => {
-                    if (input === "") {
-                        return "Please make sure you enter a name, and that your only using letters"
+                    if (input === "" || isNaN(input) === true) {
+                        return "Please make sure you enter a numerical ID"
                     }
                     return true 
                 }
@@ -59,7 +59,7 @@
                 message: "Please enter the manager's email address",
                 validate: async (input) => {
                     if (input === "") {
-                        return "Please make sure you enter a name, and that your only using letters"
+                        return "Please make sure you enter an email address"
                     }
                     return true 
                 }
@@ -70,7 +70,7 @@
                 message: "Please enter the manager's office number",
                 validate: async (input) => {
                     if (input === "") {
-                        return "Please make sure you enter a name, and that your only using letters"
+                        return "Please make sure you enter an office number"
                     }
                     return true 
                 }
@@ -93,7 +93,7 @@
                 name: "name",
                 message: "Please enter the engineer's name",
                 validate: async (input) => {
-                    if (input === "") {
+                    if (input === "" || isNaN(input) === false) {
                         return "Please make sure you enter a name, and that your only using letters"
                     }
                     return true 
@@ -104,8 +104,8 @@
                 name: "employeeID",
                 message: "Please enter the engineer's employee ID",
                 validate: async (input) => {
-                    if (input === "") {
-                        return "Please make sure you enter a name, and that your only using letters"
+                    if (input === "" || isNaN(input) === true) {
+                        return "Please make sure you enter a numerical ID"
                     }
                     return true 
                 }
@@ -116,7 +116,7 @@
                 message: "Please enter the engineer's email address",
                 validate: async (input) => {
                     if (input === "") {
-                        return "Please make sure you enter a name, and that your only using letters"
+                        return "Please make sure you enter an email address"
                     }
                     return true 
                 }
@@ -150,7 +150,7 @@
                 name: "name",
                 message: "Please enter the intern's name",
                 validate: async (input) => {
-                    if (input === "") {
+                    if (input === "" || isNaN(input) === false) {
                         return "Please make sure you enter a name, and that your only using letters"
                     }
                     return true 
@@ -161,8 +161,8 @@
                 name: "employeeID",
                 message: "Please enter the intern's employee ID",
                 validate: async (input) => {
-                    if (input === "") {
-                        return "Please make sure you enter a name, and that your only using letters"
+                    if (input === "" || isNaN(input) === true) {
+                        return "Please make sure you enter a numerical ID"
                     }
                     return true 
                 }
@@ -173,7 +173,7 @@
                 message: "Please enter the intern's email address",
                 validate: async (input) => {
                     if (input === "") {
-                        return "Please make sure you enter a name, and that your only using letters"
+                        return "Please make sure you enter an email address"
                     }
                     return true 
                 }
@@ -183,7 +183,7 @@
                 name: "school",
                 message: "Please enter the interns's school",
                 validate: async (input) => {
-                    if (input === "") {
+                    if (input === "" || isNaN(input) === false) {
                         return "Please make sure you enter a name, and that your only using letters"
                     }
                     return true 
