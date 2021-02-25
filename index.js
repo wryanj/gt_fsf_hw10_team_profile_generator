@@ -132,7 +132,7 @@
 // DEFINE SEQUENCE FOR ASYCHRONOUS LOGIC EXECUTION
 //-------------------------------------------------------------------------------------------------------------------
 
-    // (PROGRAM START) Start the program by creating a new manager (this is invoked with the init function)
+    // (PROGRAM START) Start the program by creating a new manager (this is invoked with the init function at page bottom)
     const createManager = () => {
 
         // Upon start of application (createManager invoked) prompt user for manager information (and next steps selection)
@@ -378,7 +378,7 @@
         </html>
         `
         
-       // Lastly, call the writeProfile function to generate the html page with formatting and cards populated...
+       // Lastly, call the writeProfile function to generate the html page with formatting and cards populated and place it in the specified directory...
         writeFileAsync("./rendered_files_html/teamportfolio.html", createdHTML)
 
             // Then log success if its successful, ....

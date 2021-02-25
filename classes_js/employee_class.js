@@ -25,7 +25,7 @@
             }
 
             // Method to return employee email
-            getID () {
+            getEmail () {
                 return this.email 
             }
 
