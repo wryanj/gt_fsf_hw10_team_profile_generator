@@ -24,7 +24,7 @@
     const writeFileAsync = util.promisify(fs.writeFile);
 
 //-------------------------------------------------------------------------------------------------------------------
-// FUNCTIONAL PROGRAM LOGIC TO BE EXECUTED UPON INVOKATOIN OF INIT FUNCTION AND SUBSEQUENT FUNCTIONS AT SCRIPT BOTTOM
+// PROMPT FUNCTIONS TO BE INVOKED AT PROGRAM START
 //-------------------------------------------------------------------------------------------------------------------
 
     // When the application starts (which invokes this function), prompt the user to enter manager info (name,employeeID,email,officeNumber)
