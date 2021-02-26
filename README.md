@@ -1,4 +1,4 @@
-# GT_fsf_HW10_NodeJS_ReadME_Generator
+# GT_fsf_hw10_team_profile_generator
 ## Table of Contents
 1. [Description](#Description)
 3. [Usage](#Usage)
@@ -36,7 +36,7 @@ Below are some images and screenshots, as well as a video demo how the applicati
 
 
 ## Usage
-This application can be used to quickly generate static team profile page in HTML. By running the application from the terminal you can enter prompted answers to questions, and have the answers written into a formatted document that is mobile responsive.
+This application can be used to quickly generate a static team profile page in html format. By running the application from the terminal you can enter prompted answers to questions, and have the answers written into a formatted page that is mobile responsive.
 
 ## Installation
 To install this application you just need to ensure that you have nodeJS and run the npm i command to get required dependencies (inquirer and jest). For jest, make sure the package.json tests object has jest entered for its tests property.
