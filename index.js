@@ -27,179 +27,198 @@
 // PROMPT FUNCTIONS TO BE INVOKED AT PROGRAM START
 //-------------------------------------------------------------------------------------------------------------------
 
-    // When the application starts (which invokes this function), prompt the user to enter manager info (name,employeeID,email,officeNumber)
-    const promptForManagerInfo = () => {
+    // Define Separate Functions That Provide Prompts Based on Employee Type Being Created...
 
-        return inquirer.prompt([
-            {
-                type: "input",
-                name: "name",
-                message: "Please enter the manager's name",
-                validate: async (input) => {
-                    if (input === "" || isNaN(input) === false) {
-                        return "Please make sure you enter a name, and that your only using letters"
+        // Function For Getting New Manager Information...
+        const promptForManagerInfo = () => {
+
+            return inquirer.prompt([
+                {
+                    type: "input",
+                    name: "name",
+                    message: "Please enter the manager's name",
+                    validate: async (input) => {
+                        if (input === "" || isNaN(input) === false) {
+                            return "Please make sure you enter a name, and that your only using letters"
+                        }
+                        return true 
                     }
-                    return true 
-                }
-            },
-            {
-                type: "input",
-                name: "employeeID",
-                message: "Please enter the manager's employee ID",
-                validate: async (input) => {
-                    if (input === "" || isNaN(input) === true) {
-                        return "Please make sure you enter a numerical ID"
+                },
+                {
+                    type: "input",
+                    name: "employeeID",
+                    message: "Please enter the manager's employee ID",
+                    validate: async (input) => {
+                        if (input === "" || isNaN(input) === true) {
+                            return "Please make sure you enter a numerical ID"
+                        }
+                        return true 
                     }
-                    return true 
-                }
-            },
-            {
-                type: "input",
-                name: "email",
-                message: "Please enter the manager's email address",
-                validate: async (input) => {
-                    if (input === "") {
-                        return "Please make sure you enter an email address"
+                },
+                {
+                    type: "input",
+                    name: "email",
+                    message: "Please enter the manager's email address",
+                    validate: async (input) => {
+                        if (input === "") {
+                            return "Please make sure you enter an email address"
+                        }
+                        return true 
                     }
-                    return true 
-                }
-            },
-            {
-                type: "input",
-                name: "officeNumber",
-                message: "Please enter the manager's office number",
-                validate: async (input) => {
-                    if (input === "") {
-                        return "Please make sure you enter an office number"
+                },
+                {
+                    type: "input",
+                    name: "officeNumber",
+                    message: "Please enter the manager's office number",
+                    validate: async (input) => {
+                        if (input === "") {
+                            return "Please make sure you enter an office number"
+                        }
+                        return true 
                     }
-                    return true 
+                },
+                {
+                    type: "list",
+                    name: "nextStep",
+                    message: "You've completed entry of the manager's information. Please select what you like to do next.",
+                    choices: ["Add an Engineer", "Add an Intern", "Finish Building Team"]
                 }
-            },
-            {
-                type: "list",
-                name: "nextStep",
-                message: "You've completed entry of the manager's information. Please select what you like to do next.",
-                choices: ["Add an Engineer", "Add an Intern", "Finish Building Team"]
-            }
-        ])
+            ])
+        }
+
+        // Function for Getting New Engineer Information
+        const promptForEngineerInfo = () => {
+
+            return inquirer.prompt([
+                {
+                    type: "input",
+                    name: "name",
+                    message: "Please enter the engineer's name",
+                    validate: async (input) => {
+                        if (input === "" || isNaN(input) === false) {
+                            return "Please make sure you enter a name, and that your only using letters"
+                        }
+                        return true 
+                    }
+                },
+                {
+                    type: "input",
+                    name: "employeeID",
+                    message: "Please enter the engineer's employee ID",
+                    validate: async (input) => {
+                        if (input === "" || isNaN(input) === true) {
+                            return "Please make sure you enter a numerical ID"
+                        }
+                        return true 
+                    }
+                },
+                {
+                    type: "input",
+                    name: "email",
+                    message: "Please enter the engineer's email address",
+                    validate: async (input) => {
+                        if (input === "") {
+                            return "Please make sure you enter an email address"
+                        }
+                        return true 
+                    }
+                },
+                {
+                    type: "input",
+                    name: "github",
+                    message: "Please enter the engineers Github user name",
+                    validate: async (input) => {
+                        if (input === "") {
+                            return "Please make sure you enter a name, and that your only using letters"
+                        }
+                        return true 
+                    }
+                },
+                {
+                    type: "list",
+                    name: "nextStep",
+                    message: "You've completed entry of the engineer's information. Please select what you like to do next.",
+                    choices: ["Add an Engineer", "Add an Intern", "Finish Building Team"]
+                }
+            ])
+        }
+
+        // Function for Getting New Intern Information
+        const promptForInternInfo = () => {
+
+            return inquirer.prompt([
+                {
+                    type: "input",
+                    name: "name",
+                    message: "Please enter the intern's name",
+                    validate: async (input) => {
+                        if (input === "" || isNaN(input) === false) {
+                            return "Please make sure you enter a name, and that your only using letters"
+                        }
+                        return true 
+                    }
+                },
+                {
+                    type: "input",
+                    name: "employeeID",
+                    message: "Please enter the intern's employee ID",
+                    validate: async (input) => {
+                        if (input === "" || isNaN(input) === true) {
+                            return "Please make sure you enter a numerical ID"
+                        }
+                        return true 
+                    }
+                },
+                {
+                    type: "input",
+                    name: "email",
+                    message: "Please enter the intern's email address",
+                    validate: async (input) => {
+                        if (input === "") {
+                            return "Please make sure you enter an email address"
+                        }
+                        return true 
+                    }
+                },
+                {
+                    type: "input",
+                    name: "school",
+                    message: "Please enter the interns's school",
+                    validate: async (input) => {
+                        if (input === "" || isNaN(input) === false) {
+                            return "Please make sure you enter a name, and that your only using letters"
+                        }
+                        return true 
+                    }
+                },
+                {
+                    type: "list",
+                    name: "nextStep",
+                    message: "You've completed entry of the intern's information. Please select what you like to do next.",
+                    choices: ["Add an Engineer", "Add an Intern", "Finish Building Team"]
+                }
+            ])
+        }
+
+
+    // Define function that takes the next step selection and directs the user to the chosen next step....
+    const moveToNext = (nextStepSelection) => {
+
+        // If they want to add an engineer, call the createEngineer function
+        if (nextStepSelection === "Add an Engineer") {
+            createEngineer();
+        }
+        // If they want to add an intern, call the createIntern function
+        else if (nextStepSelection === "Add an Intern") {
+            createIntern();
+        }
+        // Else (if they decide to finish building the team, the third option) call the createTeamProfile function...
+        else {
+            createTeamProfile();
+        }
+
     }
 
-    // If invoked, prompt the following questions to facilitate creation of an instance of an Engineer class...
-    const promptForEngineerInfo = () => {
-
-        return inquirer.prompt([
-            {
-                type: "input",
-                name: "name",
-                message: "Please enter the engineer's name",
-                validate: async (input) => {
-                    if (input === "" || isNaN(input) === false) {
-                        return "Please make sure you enter a name, and that your only using letters"
-                    }
-                    return true 
-                }
-            },
-            {
-                type: "input",
-                name: "employeeID",
-                message: "Please enter the engineer's employee ID",
-                validate: async (input) => {
-                    if (input === "" || isNaN(input) === true) {
-                        return "Please make sure you enter a numerical ID"
-                    }
-                    return true 
-                }
-            },
-            {
-                type: "input",
-                name: "email",
-                message: "Please enter the engineer's email address",
-                validate: async (input) => {
-                    if (input === "") {
-                        return "Please make sure you enter an email address"
-                    }
-                    return true 
-                }
-            },
-            {
-                type: "input",
-                name: "github",
-                message: "Please enter the engineers Github user name",
-                validate: async (input) => {
-                    if (input === "") {
-                        return "Please make sure you enter a name, and that your only using letters"
-                    }
-                    return true 
-                }
-            },
-            {
-                type: "list",
-                name: "nextStep",
-                message: "You've completed entry of the engineer's information. Please select what you like to do next.",
-                choices: ["Add an Engineer", "Add an Intern", "Finish Building Team"]
-            }
-        ])
-    }
-
-    // If invoked, prompt the following questions to facilitate creation of an instance of an Intern class...
-    const promptForInternInfo = () => {
-
-        return inquirer.prompt([
-            {
-                type: "input",
-                name: "name",
-                message: "Please enter the intern's name",
-                validate: async (input) => {
-                    if (input === "" || isNaN(input) === false) {
-                        return "Please make sure you enter a name, and that your only using letters"
-                    }
-                    return true 
-                }
-            },
-            {
-                type: "input",
-                name: "employeeID",
-                message: "Please enter the intern's employee ID",
-                validate: async (input) => {
-                    if (input === "" || isNaN(input) === true) {
-                        return "Please make sure you enter a numerical ID"
-                    }
-                    return true 
-                }
-            },
-            {
-                type: "input",
-                name: "email",
-                message: "Please enter the intern's email address",
-                validate: async (input) => {
-                    if (input === "") {
-                        return "Please make sure you enter an email address"
-                    }
-                    return true 
-                }
-            },
-            {
-                type: "input",
-                name: "school",
-                message: "Please enter the interns's school",
-                validate: async (input) => {
-                    if (input === "" || isNaN(input) === false) {
-                        return "Please make sure you enter a name, and that your only using letters"
-                    }
-                    return true 
-                }
-            },
-            {
-                type: "list",
-                name: "nextStep",
-                message: "You've completed entry of the intern's information. Please select what you like to do next.",
-                choices: ["Add an Engineer", "Add an Intern", "Finish Building Team"]
-            }
-        ])
-    }
-
-
-  
 //-------------------------------------------------------------------------------------------------------------------
 // DEFINE SEQUENCE FOR ASYCHRONOUS LOGIC EXECUTION
 //-------------------------------------------------------------------------------------------------------------------
@@ -223,20 +242,8 @@
 
             // Then (if the above is successful) If they want to create another employee, invoke the appropraite function ELSE begin the team profile generation process..
             .then( () => {
-
-                // If they want to add an engineer, call the createEngineer function
-                if (nextStep === "Add an Engineer") {
-                    createEngineer();
-                }
-                // If they want to add an intern, call the createIntern function
-                else if (nextStep === "Add an Intern") {
-                    createIntern();
-                }
-                // Else (if they decide to finish building the team, the third option) call the createTeamProfile function...
-                else {
-                    createTeamProfile();
-                }
-            })
+                moveToNext(nextStep);
+            })      
 
             // If there is an failure, console log an error and stop the sequence
             .catch(err => console.error(err));     
@@ -261,18 +268,7 @@
 
             // Then (if the above is successful) If they want to create another employee, invoke the appropraite function ELSE begin the team profile generation process..
             .then( () => {
-                // If they want to add an engineer, call the createEngineer function
-                if (nextStep === "Add an Engineer") {
-                    createEngineer();
-                }
-                // If they want to add an intern, call the createIntern function
-                else if (nextStep === "Add an Intern") {
-                    createIntern();
-                }
-                // Else (if they decide to finish building the team, the third option) call the createTeamProfile function...
-                else {
-                    createTeamProfile();
-                }
+                moveToNext(nextStep);
             })
 
             // If there is an failure, console log an error and stop the sequence
@@ -298,20 +294,8 @@
             })
    
             // Then (if the above is successful) If they want to create another employee, invoke the appropraite function ELSE begin the team profile generation process..
-            .then( () => {
-   
-                // If they want to add an engineer, call the createEngineer function
-                if (nextStep === "Add an Engineer") {
-                    createEngineer();
-                }
-                // If they want to add an intern, call the createIntern function
-                else if (nextStep === "Add an Intern") {
-                    createIntern();
-                }
-                // Else (if they decide to finish building the team, the third option) call the createTeamProfile function...
-                else {
-                    createTeamProfile();
-                }
+              .then( () => {
+                moveToNext(nextStep);
             })
    
             // If there is an failure, console log an error and stop the sequence
