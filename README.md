@@ -58,8 +58,6 @@ https://opensource.org/licenses/MIT
 
 ## Questions
 Email me at ryanjohnson9685@gmail.com for more information.
-You can also find me on github with the user name wryanj. 
-Check my profile out here: https://github.com/wryanj
 
 ## Credits
 For this assignment I utilized class notes and recordings, as well as some MDM and W3 schools. I also reviewed the npm documentation for jest and inquirer for specific questions dealing with setup and validation.
