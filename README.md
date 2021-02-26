@@ -17,21 +17,21 @@ This project challenged me more than the prior ones. I further familiarized myse
 
 All my unit tests for my classes and related methods / constructors passed. In one instance, I was actually able to successfully use them to catch an issue I would have otherwise missed. 
 
-I used validation to confirm inquirer prompt responses. For all questions, some validation (example cannot be blank, has to be number or text...) was presnt.
+I used validation to confirm inquirer prompt responses. For all questions, some validation (example cannot be blank, has to be number or text...) was present.
 
 Below are some images and screenshots, as well as a video demo how the application works. My generated html included the bootstrap 5 cdn so that it could use minimum css and remain mobile responsive.
 
 
-**Screenshot of Rendered HTML on Desktop**
+**Screenshot of Rendered HTML on Desktop** 
 ![image](https://user-images.githubusercontent.com/72420733/109347606-69502700-7841-11eb-827f-7ba296596a1c.png)
 
-**Screenshot of Rendered HTML on Mobile**
+**Screenshot of Rendered HTML on Mobile**   
 ![image](https://user-images.githubusercontent.com/72420733/109347918-da8fda00-7841-11eb-8202-46fac0514f00.png)
 
-**Screenshot CLI after setting up new employees**
+**Screenshot CLI after setting up new employees**  
 ![image](https://user-images.githubusercontent.com/72420733/109347990-f4312180-7841-11eb-8cd2-9f720ca20661.png)
 
-**Screenshot CLI after execution of unit testing**
+**Screenshot CLI after execution of unit testing**  
 ![image](https://user-images.githubusercontent.com/72420733/109348588-ba144f80-7842-11eb-8b0b-f842555dc6d6.png)
 
 
