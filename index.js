@@ -13,12 +13,11 @@
     const Engineer = require("./classes_js/engineer_class");
     const Intern = require("./classes_js/intern_class");
 
-    // Define a global array of employees to pull from when generating the HTML content (array is added to as new classes are created)
+    // Define some globally accessible variabales that will be set / accessed within different functions
     let nextStep;
     let fullTeam = [];
     let finalProfileCardsArray = [];
     let finalProfileCardsArrayJoined;
-    let createdHTML;
 
     // Use promisify to convert fs.writeFile method so that it returns a promis object
     const writeFileAsync = util.promisify(fs.writeFile);
@@ -386,7 +385,7 @@
         finalProfileCardsArrayJoined = finalProfileCardsArray.join("\n");
 
         // And create some base HTML with the joined string of html cards placed in the right location...
-        createdHTML =`
+        const createdHTML =`
         <!DOCTYPE html>
         <html lang="en">
             <!--Document Head-->
